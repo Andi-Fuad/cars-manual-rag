@@ -1,0 +1,6 @@
+# Document Processing
+pymupdf
+pillow
+
+# Testing
+pytest
