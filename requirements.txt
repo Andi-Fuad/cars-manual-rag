@@ -1,6 +1,16 @@
-# Document Processing
-pymupdf
-pillow
+# Database
+psycopg2-binary
 
-# Testing
+# Google genai
+google-generativeai
+
+# PDF Processing
+PyMuPDF
+Pillow
+
+# Utilities
+python-dotenv
+numpy
+
+# Testing 
 pytest

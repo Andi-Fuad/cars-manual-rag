@@ -1,5 +1,5 @@
 # demo_rag.py
-from services.rag_pipeline import RAGPipeline
+from rag_pipeline import RAGPipeline
 import sys
 
 def main():

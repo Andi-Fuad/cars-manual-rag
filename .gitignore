@@ -1,4 +1,5 @@
 venv/
 .env
-test_images/
-extracted_images/
+testing/
+# test_images/
+# extracted_images/

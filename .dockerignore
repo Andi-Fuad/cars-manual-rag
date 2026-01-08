@@ -1,0 +1,44 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Testing
+.pytest_cache/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data
+*.pdf
+extracted_images/
+
+# Environment
+.env.local
+.env.*.local
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Docs
+README.md
+docs/
+
+# Tests
+*_test.py
+tests/

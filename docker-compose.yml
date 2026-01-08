@@ -1,22 +1,54 @@
 # version: '3.8'
 
 services:
+  # PostgreSQL with pgvector
   postgres:
     image: pgvector/pgvector:pg16
     container_name: car_manual_db
     environment:
-      POSTGRES_USER: car_manual_user
-      POSTGRES_PASSWORD: car_manual_password
-      POSTGRES_DB: car_manual_db
+      POSTGRES_USER: ${DB_USER:-rag_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-rag_password}
+      POSTGRES_DB: ${DB_NAME:-car_manual_db}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U car_manual_user -d car_manual_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-rag_user} -d ${DB_NAME:-car_manual_db}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - rag_network
+
+  # RAG Application
+  rag_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: car_manual_rag
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-car_manual_db}
+      DB_USER: ${DB_USER:-rag_user}
+      DB_PASSWORD: ${DB_PASSWORD:-rag_password}
+    volumes:
+      - ./data:/app/data
+      - ./extracted_images:/app/extracted_images
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - rag_network
+    stdin_open: true  # Keep STDIN open for interactive mode
+    tty: true         # Allocate a pseudo-TTY
+    command: tail -f /dev/null  # Keep container running
 
 volumes:
   postgres_data:
+
+networks:
+  rag_network:
+    driver: bridge
