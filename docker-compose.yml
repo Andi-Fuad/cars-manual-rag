@@ -1,7 +1,6 @@
-# version: '3.8'
+version: '3.8'
 
 services:
-  # PostgreSQL with pgvector
   postgres:
     image: pgvector/pgvector:pg16
     container_name: car_manual_db
@@ -21,12 +20,11 @@ services:
     networks:
       - rag_network
 
-  # RAG Application
-  rag_app:
+  rag_api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: car_manual_rag
+    container_name: car_manual_rag_api
     environment:
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       DB_HOST: postgres
@@ -34,17 +32,16 @@ services:
       DB_NAME: ${DB_NAME:-car_manual_db}
       DB_USER: ${DB_USER:-rag_user}
       DB_PASSWORD: ${DB_PASSWORD:-rag_password}
+    ports:
+      - "8000:8000"
     volumes:
-      - ./data:/app/data
-      - ./extracted_images:/app/extracted_images
+      - .:/app:cached
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - rag_network
-    stdin_open: true  # Keep STDIN open for interactive mode
-    tty: true         # Allocate a pseudo-TTY
-    command: tail -f /dev/null  # Keep container running
+    command: python -m uvicorn routes.main:app --host 0.0.0.0 --port 8000 --reload
 
 volumes:
   postgres_data:

@@ -10,7 +10,7 @@ def run_command(cmd):
     except subprocess.CalledProcessError as e:
         print(f"Error: {e.stderr}")
         return None
-
+ 
 def main():
     if len(sys.argv) < 2:
         print("""

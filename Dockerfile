@@ -8,6 +8,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
+    gcc \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first (for better caching)
@@ -15,22 +17,16 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir uvicorn[standard] fastapi
 
-# Copy application code
-COPY core/ ./core/
-COPY schemas/ ./schemas/
-COPY services/ ./services/
-COPY scripts/ ./scripts/
-COPY utils/ ./utils/
-COPY rag_pipeline.py .
-COPY services/document_processor.py .
-COPY demo_rag.py .
+# Copy ALL application code
+COPY . .
 
 # Create directories for data
-RUN mkdir -p /app/data /app/extracted_images
+RUN mkdir -p /app/data /app/extracted_images /app/data/uploads
 
 # Set Python path
 ENV PYTHONPATH=/app
 
-# Default command (can be overridden)
-CMD ["python", "demo_rag.py"]
+# Run FastAPI app (using routes/main.py as entry point)
+CMD ["python", "-m", "uvicorn", "routes.main:app", "--host", "0.0.0.0", "--port", "8000"]

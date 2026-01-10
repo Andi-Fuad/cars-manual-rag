@@ -3,7 +3,7 @@ from utils.pdf_extractor import PDFExtractor
 from utils.text_cleaner import TextCleaner
 from utils.text_chunker import TextChunker
 from core.db_connection import DatabaseConnection
-from schemas.database import DatabaseSchema
+from models.database import DatabaseSchema
 from services.embedding_generator import EmbeddingGenerator
 from services.storage_manager import StorageManager
 from typing import Dict, List

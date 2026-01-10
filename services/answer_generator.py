@@ -16,7 +16,7 @@ class AnswerGenerator:
         
         # Use the correct Gemini model name
         # Updated model name for Gemini 
-        self.model = genai.GenerativeModel('gemini-2.5-flash')
+        self.model = genai.GenerativeModel('gemini-3-flash-preview')
         
         # System instruction for car manual assistant
         self.system_instruction = """Anda adalah asisten virtual untuk manual mobil dalam Bahasa Indonesia. 
@@ -27,7 +27,7 @@ Tugas Anda:
 4. Sertakan referensi halaman jika relevan
 5. Gunakan Bahasa Indonesia yang baik dan benar
 6. Jika ada informasi keamanan penting, tekankan dengan jelas"""
-    
+     
     def generate_answer(
         self,
         query: str,

@@ -1,9 +1,8 @@
-# text_chunker.py
 from typing import List, Dict
 import re
 
 class TextChunker:
-    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200):
+    def __init__(self, chunk_size: int = 500, chunk_overlap: int = 100):
         """
         chunk_size: target number of characters per chunk
         chunk_overlap: number of characters to overlap between chunks

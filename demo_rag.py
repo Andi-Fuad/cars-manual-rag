@@ -40,7 +40,7 @@ def main():
             continue
         
         # Query the RAG system
-        result = rag.query(question, top_k=5)
+        result = rag.query(question, top_k=10)
         
         # Display answer
         print(f"\n{'─'*60}")

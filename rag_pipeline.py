@@ -1,6 +1,6 @@
 # rag_pipeline.py
 from core.db_connection import DatabaseConnection
-from schemas.database import DatabaseSchema
+from models.database import DatabaseSchema
 from services.embedding_generator import EmbeddingGenerator
 from services.similarity_search import SimilaritySearch
 from services.context_builder import ContextBuilder
@@ -26,7 +26,7 @@ class RAGPipeline:
     def query(
         self,
         question: str,
-        top_k: int = 5,
+        top_k: int = 10,
         similarity_threshold: float = 0.5,
         include_sources: bool = True
     ) -> Dict:

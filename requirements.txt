@@ -1,8 +1,9 @@
 # Database
 psycopg2-binary
 
-# Google genai
+# LLM
 google-generativeai
+langchain
 
 # PDF Processing
 PyMuPDF
@@ -14,3 +15,17 @@ numpy
 
 # Testing 
 pytest
+
+# Api
+fastapi
+uvicorn[standard]
+python-multipart
+
+# CORS support
+fastapi-cors
+
+# Additional utilities
+pydantic
+
+# Front-end
+streamlit
